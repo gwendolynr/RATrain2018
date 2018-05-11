@@ -1,0 +1,73 @@
+---
+title: "Setting up R Notebook"
+author: "Gwendolyn Reynolds"
+date: "5/11/2018"
+output:
+  html_document: default
+  word_document: default
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Load packages 
+library(knitr)
+library(readxl)
+library(scales)
+library(anonymizer)
+library(lubridate)
+library(forcats)
+library(sorensonimpact)
+library(googlesheets)
+
+```
+
+```{r, echo=FALSE}
+
+cars <- read_csv("~/Desktop/cars.csv")
+
+names(mtcars)
+
+cyltable <- cars %>% 
+  count(cyl) %>% 
+  print()
+
+cars %>% 
+  count(cyl, gear) %>% 
+  print()
+
+cars %>% 
+  summarise(meanmpg = mean(mpg, na.rm = T)) %>% 
+  print()
+
+cars %>% 
+  summarise(medianmpg = median(mpg, na.rm = T)) %>% 
+  print()
+
+cars %>% 
+  count(cyl) %>% 
+  ggplot(aes(x=cyl, y=n)) + 
+  geom_col(fill="#741D5A")+
+  labs(y="Number", x="Cylinders") +
+  ggtitle("Number of Cars by Cylinder") +
+  theme_minimal()
+
+cars %>% 
+  ggplot(aes(x=wt)) +
+  geom_histogram()
+
+cars %>% 
+  group_by(cyl) %>% 
+  summarise(meanmpg = mean(mpg))
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
