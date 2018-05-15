@@ -26,10 +26,12 @@ library(googlesheets)
 
 ```
 
-```{r, echo=FALSE}
+```{r import, echo=FALSE}
 
 cars <- read_csv("~/Desktop/cars.csv")
+```
 
+```{r, echo=FALSE}
 names(mtcars)
 
 cyltable <- cars %>% 
@@ -41,12 +43,10 @@ cars %>%
   print()
 
 cars %>% 
-  summarise(meanmpg = mean(mpg, na.rm = T)) %>% 
-  print()
+  summarise(meanmpg = mean(mpg, na.rm = T)) 
 
 cars %>% 
-  summarise(medianmpg = median(mpg, na.rm = T)) %>% 
-  print()
+  summarise(medianmpg = median(mpg, na.rm = T)) 
 
 cars %>% 
   count(cyl) %>% 
@@ -63,6 +63,13 @@ cars %>%
 cars %>% 
   group_by(cyl) %>% 
   summarise(meanmpg = mean(mpg))
+
+cars2 <- cars %>% 
+  mutate(mpgmultcyl = mpg*cyl) %>% 
+  rename(milespergallon = mpg)
+
+#write_rds(cars, "~/Desktop/carsv1.rds")
+
 ```
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
